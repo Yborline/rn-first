@@ -91,7 +91,7 @@ const Register = () => {
                   placeholder="Ваша електронна адреса"
                   onChange={setEmail}
                 />
-                {/* <InputPassword placeholder="Пароль" onChange={setPassword} /> */}
+                <InputPassword placeholder="Пароль" onChange={setPassword} />
               </View>
               <TouchableOpacity style={styles.buttonAuth} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Register</Text>
