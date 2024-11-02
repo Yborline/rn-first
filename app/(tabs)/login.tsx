@@ -30,13 +30,15 @@ const Login = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.conteiner}>
           <KeyboardAvoidingView
-            keyboardVerticalOffset={-320}
+            keyboardVerticalOffset={-70}
             style={styles.boxAboiding}
             behavior={"padding"}
           >
             <View style={styles.boxForm}>
               <View style={styles.boxInput}>
-                <Text style={styles.textTitle}>Увійти</Text>
+                <Text className="text-3xl font-bold" style={styles.textTitle}>
+                  Увійти
+                </Text>
                 <Input
                   type="emailAddress"
                   placeholder="Ваша електронна адреса"
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   boxForm: {
-    height: 549,
+    height: 375,
     width: `100%`,
     backgroundColor: `white`,
     paddingVertical: 32,
