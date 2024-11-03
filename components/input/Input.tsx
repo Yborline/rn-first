@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
+import { styles } from "./input.styles";
 interface IInput {
   placeholder: string;
   onChange: (text: string) => void;
@@ -21,22 +22,5 @@ const Input: FC<IInput> = ({ placeholder, onChange, type }) => {
     />
   );
 };
-const styles = StyleSheet.create({
-  textInput: {
-    margin: 0,
-    height: 40,
-    backgroundColor: "rgba(246, 246, 246, 1)",
-    borderColor: "rgba(232, 232, 232, 1)",
-    color: "black",
-    borderWidth: 1,
-    padding: 10,
-    width: "100%",
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  inputFocused: {
-    borderColor: "rgba(255, 108, 0, 1)",
-  },
-});
 
 export default Input;
