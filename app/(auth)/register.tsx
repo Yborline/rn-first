@@ -13,10 +13,9 @@ import startBg from "@assets/images/background/startBg.png";
 import { useState } from "react";
 import { Link } from "expo-router";
 import Input from "@components/input/Input";
-import InputPassword from "@components/input/InputPassword/InputPassword";
 import * as ImagePicker from "expo-image-picker";
 // import SvgComponent from "@assets/svg/add";
-import { styles } from "../styles/register";
+import { styles } from "../styles/auth/register";
 import SvgAdd from "@assets/svg/add";
 
 const Register = () => {
@@ -89,7 +88,7 @@ const Register = () => {
                   placeholder="Ваша електронна адреса"
                   onChange={setEmail}
                 />
-                <InputPassword placeholder="Пароль" onChange={setPassword} />
+                <Input placeholder="Пароль" onChange={setPassword} />
               </View>
               <TouchableOpacity style={styles.buttonAuth} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Register</Text>

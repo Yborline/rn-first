@@ -12,8 +12,7 @@ import startBg from "@assets/images/background/startBg.png";
 import { useState } from "react";
 import { Link } from "expo-router";
 import Input from "@components/input/Input";
-import InputPassword from "@components/input/InputPassword/InputPassword";
-import { styles } from "../styles/login";
+import { styles } from "../styles/auth/login";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,7 +38,7 @@ const Login = () => {
                   placeholder="Ваша електронна адреса"
                   onChange={setEmail}
                 />
-                <InputPassword placeholder="Пароль" onChange={setPassword} />
+                <Input placeholder="Пароль" onChange={setPassword} />
               </View>
               <TouchableOpacity style={styles.buttonAuth} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Login</Text>
