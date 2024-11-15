@@ -3,11 +3,11 @@ import React from "react";
 
 import { TabBarIcon } from "@components/navigation/TabBarIcon";
 import { Colors } from "@constants/Colors";
-import { useColorScheme } from "@hooks/useColorScheme";
+import { useColorScheme, useCustomTheme } from "@hooks/useColorScheme";
 import Feather from "@expo/vector-icons/Feather";
-import Login from "./login";
 import { Image, Text, View } from "react-native";
 import saveIcon from "../../assets/images/icons/bookmark.png";
+import { useTheme } from "@react-navigation/native";
 
 // const TabIcon = ({ icon, color, name, focused }) => {
 //   return (
@@ -27,13 +27,20 @@ import saveIcon from "../../assets/images/icons/bookmark.png";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const isLoggedIn = true;
 
+  const theme = useCustomTheme();
+  console.log(theme);
+  const isLoggedIn = true;
   return (
     <Tabs
-      initialRouteName="login"
+      initialRouteName="publications"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: theme.tint,
+        tabBarInactiveTintColor: theme.tintInactive,
+        tabBarStyle: {
+          backgroundColor: theme.tabsBack,
+        },
         headerShown: false,
       }}
     >
@@ -53,17 +60,20 @@ export default function TabLayout() {
         name="publications"
         options={{
           title: "Публікації",
-          headerShown: true,
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? "apps" : "apps"} color={color} />
-          ),
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => {
+            console.log(color);
+            return (
+              <TabBarIcon name={focused ? "apps" : "apps"} color={color} />
+            );
+          },
         }}
       />
       <Tabs.Screen
         name="create"
         options={{
           title: "Створити",
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             // <TabIcon
             //   icon={saveIcon}
@@ -79,7 +89,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Профіль",
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <Feather name={focused ? "user" : "user"} size={24} color={color} />
           ),
