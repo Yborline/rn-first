@@ -18,6 +18,9 @@
       ],
       "@constants/*": [
         "constants/*"
+      ],
+      "@lib/*": [
+        "lib/*"
       ]
     },
     "resolveJsonModule": true
