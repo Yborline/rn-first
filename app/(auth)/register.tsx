@@ -9,9 +9,10 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import { createUser } from "@lib/appwrite";
 import startBg from "@assets/images/background/startBg.png";
 import { useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import Input from "@components/input/Input";
 import * as ImagePicker from "expo-image-picker";
 // import SvgComponent from "@assets/svg/add";
@@ -23,8 +24,27 @@ const Register = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isSubmiting, setSubmiting] = useState<boolean>(false);
 
-  const handleLogin = () => {
+  const handleRegister = async () => {
+    if (!name || !password || !image) {
+      Alert.alert("Error", "Please fill in all the fields");
+    }
+    setSubmiting(true);
+    try {
+      const result = await createUser(email, password, name, image);
+      router.replace("/(tabs)/profile");
+      console.log(result);
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message); // Accessing 'message' safely
+      } else {
+        Alert.alert("Error", "Unknown error occurred");
+      }
+    } finally {
+      setSubmiting(false);
+    }
+
     Alert.alert("Credentials", `${name} + ${password}`);
   };
 
@@ -90,7 +110,10 @@ const Register = () => {
                 />
                 <Input placeholder="Пароль" onChange={setPassword} />
               </View>
-              <TouchableOpacity style={styles.buttonAuth} onPress={handleLogin}>
+              <TouchableOpacity
+                style={styles.buttonAuth}
+                onPress={handleRegister}
+              >
                 <Text style={styles.buttonText}>Register</Text>
               </TouchableOpacity>
               <Link href="/login" style={styles.linkText}>
