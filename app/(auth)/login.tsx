@@ -10,15 +10,35 @@ import {
 } from "react-native";
 import startBg from "@assets/images/background/startBg.png";
 import { useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import Input from "@components/input/Input";
 import { styles } from "../styles/auth/login";
+import { signIn } from "@lib/appwrite";
+import { useUserContext } from "@context/useUser";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isSubmiting, setSubmiting] = useState<boolean>(false);
+  const { isLoggedIn } = useUserContext();
+  console.log(isLoggedIn);
 
-  const handleLogin = () => {
-    Alert.alert("Credentials", `${email} + ${password}`);
+  const handleLogin = async () => {
+    if (!password || !email) {
+      Alert.alert("Error", "Please fill in all the fields");
+    }
+    setSubmiting(true);
+    try {
+      await signIn(email, password);
+      router.replace("/(tabs)/profile");
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message); // Accessing 'message' safely
+      } else {
+        Alert.alert("Error", "Unknown error occurred");
+      }
+    } finally {
+      setSubmiting(false);
+    }
   };
 
   return (
