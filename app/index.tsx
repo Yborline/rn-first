@@ -1,8 +1,12 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Link } from "expo-router";
+import { Link, Redirect } from "expo-router";
+import { useUserContext } from "@context/useUser";
 
 const Index = () => {
+  const { isLoading, isLoggedIn } = useUserContext();
+
+  if (!isLoading && isLoggedIn) return <Redirect href="/(tabs)/profile" />;
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={{ height: "100%" }}>
