@@ -1,4 +1,4 @@
-import { UserContext, useUser } from "@context/GlobalProvider";
+import { UserContext, useUser } from "@context/useUser";
 import { FC, ReactNode } from "react";
 
 interface IProvider {
