@@ -1,7 +1,12 @@
 import { getCurrentUser } from "@lib/appwrite";
+import { isLoaded, isLoading } from "expo-font";
 import { createContext, useContext, useEffect, useState } from "react";
 
-export const UserContext = createContext({});
+export const UserContext = createContext({
+  user: null,
+  isLoading: false,
+  isLoggedIn: false,
+});
 
 export const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +14,7 @@ export const useUser = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    console.log("ssss");
+    setIsLoading(true);
     getCurrentUser()
       .then((res) => {
         if (res) {
