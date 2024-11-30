@@ -1,4 +1,5 @@
 import { Client, Account, ID, Databases, Query } from "react-native-appwrite";
+import { User } from "../interfaces/user";
 
 export const config = {
   endpoint: "https://cloud.appwrite.io/v1",
@@ -20,15 +21,22 @@ client
 const account = new Account(client);
 const databases = new Databases(client);
 
-export const createUser = async (email, password, username, avatar) => {
+export const createUser = async (
+  email: string,
+  password: string,
+  username: string,
+  avatar: string
+) => {
   try {
     const newAccount = await account.create(
       ID.unique(),
       email,
       password,
-      username,
-      avatar
+      username
     );
+    await account.updatePrefs({
+      avatar: avatar, // Добавляем аватар
+    });
     if (!newAccount) throw Error;
     await signIn(email, password);
     const newUser = await databases.createDocument(
@@ -44,19 +52,26 @@ export const createUser = async (email, password, username, avatar) => {
     );
     return newUser;
   } catch (error) {
-    console.log(error);
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message); // Используем сообщение ошибки
+    } else {
+      throw new Error(String(error)); // Для других типов преобразуем в строку
+    }
   }
 };
 
-export const signIn = async (email, password) => {
+export const signIn = async (email: string, password: string) => {
   try {
     await account.deleteSessions();
     const session = await account.createEmailPasswordSession(email, password);
 
     return session;
   } catch (error) {
-    throw new Error(error);
+    if (error instanceof Error) {
+      throw new Error(error.message); // Используем сообщение ошибки
+    } else {
+      throw new Error(String(error)); // Для других типов преобразуем в строку
+    }
   }
 };
 
@@ -71,6 +86,12 @@ export const getCurrentUser = async () => {
       [Query.equal("accountId", currentAccount.$id)]
     );
     if (!currentUser) throw Error;
-    return currentUser.documents[0];
-  } catch (error) {}
+    return currentUser.documents[0] as User;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message); // Используем сообщение ошибки
+    } else {
+      throw new Error(String(error)); // Для других типов преобразуем в строку
+    }
+  }
 };
