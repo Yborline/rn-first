@@ -1,5 +1,6 @@
 import { Client, Account, ID, Databases, Query } from "react-native-appwrite";
 import { User } from "../interfaces/user";
+import { showError } from "@app/functions/showError";
 
 export const config = {
   endpoint: "https://cloud.appwrite.io/v1",
@@ -15,8 +16,8 @@ const client = new Client();
 
 client
   .setEndpoint(config.endpoint)
-  .setProject(config.projectId) // Your project ID
-  .setPlatform(config.platform); // Your application ID or bundle ID.
+  .setProject(config.projectId)
+  .setPlatform(config.platform);
 
 const account = new Account(client);
 const databases = new Databases(client);
@@ -52,11 +53,7 @@ export const createUser = async (
     );
     return newUser;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message); // Используем сообщение ошибки
-    } else {
-      throw new Error(String(error)); // Для других типов преобразуем в строку
-    }
+    showError(error);
   }
 };
 
@@ -67,11 +64,7 @@ export const signIn = async (email: string, password: string) => {
 
     return session;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message); // Используем сообщение ошибки
-    } else {
-      throw new Error(String(error)); // Для других типов преобразуем в строку
-    }
+    showError(error);
   }
 };
 
@@ -88,10 +81,6 @@ export const getCurrentUser = async () => {
     if (!currentUser) throw Error;
     return currentUser.documents[0] as User;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message); // Используем сообщение ошибки
-    } else {
-      throw new Error(String(error)); // Для других типов преобразуем в строку
-    }
+    showError(error);
   }
 };
